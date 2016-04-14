@@ -25,6 +25,8 @@ end
 
 
 get '/' do
+	# получаем список постов в обратном порядке
+	@results = @db.execute 'SELECT * FROM posts ORDER BY id DESC'
 	erb :index
 end
 
