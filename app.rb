@@ -21,6 +21,7 @@ configure do
 			id INTEGER PRIMARY KEY AUTOINCREMENT,
 			created_date DATE,
 			content TEXT
+			author TEXT
 		)'
 
 	@db.execute 'CREATE TABLE IF NOT EXISTS
@@ -29,6 +30,7 @@ configure do
 			post_id INTEGER,
 			created_date DATE,
 			content TEXT
+			author TEXT
 		)'
 end
 
