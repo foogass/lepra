@@ -10,7 +10,10 @@
 		<p>
 			<%= post['content'] %>
 			<br />
+			<br />
 			Added at <%= post['created_date'] %>
+			<br />
+			<a href="/post/<%= post['id'] %>">комментарии</a>
 		</p>
 		<hr />
 	<% end %>
