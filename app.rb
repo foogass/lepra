@@ -49,5 +49,9 @@ end
 
 get '/post/:post_id' do
 	post_id = params[:post_id]
-	erb "Display comments at post #{post_id}"
+
+	results = @db.execute 'SELECT * FROM posts WHERE id = ?', [post_id]
+	@row = results[0]
+
+	erb :post
 end
