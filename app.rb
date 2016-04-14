@@ -46,3 +46,8 @@ post '/new' do
 	@db.execute 'INSERT INTO posts (content, created_date) VALUES (?, datetime())', [content]
 	redirect to '/'
 end
+
+get '/post/:post_id' do
+	post_id = params[:post_id]
+	erb "Display comments at post #{post_id}"
+end
