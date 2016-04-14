@@ -62,6 +62,9 @@ get '/post/:post_id' do
 	results = @db.execute 'SELECT * FROM posts WHERE id = ?', [post_id]
 	@row = results[0]
 
+	# выбираем комментарии для нашего поста
+	@comments = @db.execute 'SELECT * FROM comments WHERE post_id = ? ORDER BY id', [post_id]
+
 	erb :post
 end
 
