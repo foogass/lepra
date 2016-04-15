@@ -9,7 +9,9 @@
 		<%= @row['content'] %>
 		<br />
 		<br />
-		Added at <%= @row['created_date'] %>
+		<span style="font-size: 75%; color: #999">Added at <%= @row['created_date'] %> by <b><%= @row['author'] %></b></span>
+		<br />
+		<br />
 		<br />
 	</p>
 	<h4>Комментарии:</h4>
@@ -18,13 +20,16 @@
 		<% @comments.each do |comment| %>
 			<%= comment['content'] %>
 			<br />
-			<span style="font-size: 75%; color: #999">Added at <%= comment['created_date'] %></span>
+			<span style="font-size: 75%; color: #999">Added at <%= comment['created_date'] %> by <b><%= comment['author'] %></b></span>
 			<hr />
 		<% end %>
 	</p>
 	<form action="/post/<%= @row['id'] %>" method="POST" role="form">
 		<textarea name="content" class="form-control" rows="3" placeholder="ничего так не радует, как хороший комментарий..."></textarea>
 		<br />
+		<label for="username">Username:</label>
+    	<input name="username" type="username" class="form-control" id="username" placeholder="username">
+    	<br />
 		<button type="submit" class="btn btn-primary">Комментировать</button>
 	</form>
 

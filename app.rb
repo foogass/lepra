@@ -20,7 +20,7 @@ configure do
 		posts (
 			id INTEGER PRIMARY KEY AUTOINCREMENT,
 			created_date DATE,
-			content TEXT
+			content TEXT,
 			author TEXT
 		)'
 
@@ -29,7 +29,7 @@ configure do
 			id INTEGER PRIMARY KEY AUTOINCREMENT,
 			post_id INTEGER,
 			created_date DATE,
-			content TEXT
+			content TEXT,
 			author TEXT
 		)'
 end
@@ -47,14 +47,19 @@ end
 
 post '/new' do
 	content = params[:content]
+	username = params[:username]
 
-	if content.length <= 0
-		@error = 'Type post text'
+	# создаём хэш ошибок
+	hh_err = {:username => "Введите имя", :content => "Не могу запостить пустоту"}
+
+	# проверка на длину передаваемых данных
+	@error = hh_err.select {|key,_| params[key] == ''}.values.join(", ")
+	if @error != ''
 		return erb :new
 	end
 
 	# сохранение данных в базу
-	@db.execute 'INSERT INTO posts (content, created_date) VALUES (?, datetime())', [content]
+	@db.execute 'INSERT INTO posts (content, created_date, author) VALUES (?, datetime(), ?)', [content, username]
 	redirect to '/'
 end
 
@@ -73,8 +78,9 @@ end
 post '/post/:post_id' do
 	post_id = params[:post_id]
 	content = params[:content]
+	username = params[:username]
 
-	@db.execute 'INSERT INTO comments (post_id, created_date, content) VALUES (?, datetime(), ?)', [post_id, content]
+	@db.execute 'INSERT INTO comments (post_id, created_date, content, author) VALUES (?, datetime(), ?, ?)', [post_id, content, username]
 
 	redirect to('/post/' + post_id)
 end
